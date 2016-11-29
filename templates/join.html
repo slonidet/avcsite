@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+
+
+<div class="container newsbg ">
+
+
+    <div class="container napr2 "  >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Войти в состав Ассоциации</h2>
+				<p></p>
+		</div>
+		</div>
+		</div>
+		</div>
+
+
+
+
+
+<div class="container napr2" >
+<form class="contact_form" action="" method="post" name="contact_form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <ul>
+        <li>
+             <h2>Форма подачи заявки</h2>
+
+        </li>
+        {% if success == "good" %}
+        <div class="container newsbg " style="    opacity: 0.8;">
+
+
+    <div class="container napr2 "  >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2 style="font-size: 24px; line-height: 1; margin-top: 5px;">Благодарим Вас за желание вступить в Ассоциацию</h2>
+				<p style="line-height: 1; font-size: 16px;"> Ваше заявка будет рассмотрена в течение месяца.<p>
+
+                 <p style="line-height: 1; font-size: 16px;">С уважением.</p>
+               <p style="line-height: 1; font-size: 16px;">Команда Ассоциации волонтерских центров</p>
+		</div>
+
+		</div>
+		</div>
+		</div>
+{% elif success == "errors" %}
+<div class="container napr2 " style="color:white;" >
+    <div class="dirbg4" style="margin-left: -5px;padding-left: 20px;padding-top: 20px;height: 150px;opacity: 0.8;">
+    
+       <h2 style="font-size: 24px; line-height: 1; margin-top: 5px;">Извините, произошла ошибка</h2>
+				<p style="line-height: 1; font-size: 16px;">Проверьте, заполнены ли вы все поля.Если поля заполнены верно, попробуйте совершить отправку позже.<p>
+
+                 <p style="line-height: 1; font-size: 16px;">С уважением.</p>
+               <p style="line-height: 1; font-size: 16px;">Команда Ассоциации волонтерских центров</p>
+    </div>
+    </div>
+{% endif %}
+
+
+
+
+         <li>
+
+
+
+           <select  required size = "1" name = "region" class="join_region">
+               {% for region in regions %}
+                    <option value="{{ region.0 }}" >{{ region.1 }}</option>
+                {% endfor %}
+
+
+
+
+    </select>
+        </li>
+
+        <li>
+
+            <input type="text" class="join_org" name="organisation"  placeholder="Введите полное название организации" required />
+        </li>
+
+          <li>
+
+            <input type="text" class="join_form" name="org_form" placeholder="Организационно-правовая форма юридического лица" required />
+        </li>
+
+
+
+
+
+        <li>
+
+            <textarea name="description" class="join_info" cols="40" rows="9" placeholder="Краткая информация об организации (не более 2000 символов)" required ></textarea>
+        </li>
+
+          <li>
+
+            <textarea name="activities" class="join_napr" cols="40" rows="9" placeholder="Основные направления деятельности (не более 2000 символов)" required ></textarea>
+        </li>
+
+         <li>
+
+            <textarea name="experience" class="join_exp" cols="40" rows="9" placeholder="Опыт участия в волонтерских федеральных проектах и программах (не более 2000 символов)" required ></textarea>
+        </li>
+
+        <li>
+
+            <input type="text" name="ogrn" class="join_ogrn" placeholder="Номер ОГРН" required />
+        </li>
+
+        <li>
+
+            <input type="text" name="volunteers" class="join_count"  placeholder="Количество волонтеров" required />
+
+        </li>
+<li style="height: 50px;">
+    <label for="name" style="font-weight:500;" class="label_join">Загрузите презентацию и устав ассоциации</label>
+        <div class="box">
+					<input type="file" name="files" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} ФАЙЛОВ ВЫБРАНО" multiple enctype="multipart/form-data"/>
+					<label for="file-1" class="join_upload"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>ЗАГРУЗИТЬ ФАЙЛЫ&hellip;</span></label>
+				</div>
+
+        <li class="recaptcha join-captcha">{% for field in form %} {{ field }} {% endfor %}</li>
+
+        <li>
+        	<button class="submit" type="submit">ОТПРАВИТЬ ЗАЯВКУ</button>
+        </li>
+
+         <li>
+
+        </li>
+
+
+    </ul>
+
+
+</form>
+</div>
+
+{% endblock %}

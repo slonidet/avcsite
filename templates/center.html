@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+
+<div class="container newsbg cenbg">
+
+
+    <div class="container napr2" >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+			    {% if center.image %}
+			        <div class="cenimg"><img src="{{ center.image.url }}"></div>
+			    {% else %}
+			        <div class="cenimg"><img src="{% static 'img/no_logo.jpg' %}"></div>
+			    {% endif %}
+			    <div class="centext">
+                <p class="centitle">{{ center.title }}</p>
+				<p class="cendisc">{{ center.desc|default:"Описание отсуствует" }}</p>
+				</div>
+		</div>
+		</div>
+		</div>
+		</div>
+
+<div class="container  " style="background-color:#ececec;width:100%;">
+
+
+    <div class="container napr2"  >
+
+        <div class="row">
+<div class="cencont">
+        <p style="font-weight:600;">Руководитель</p>
+        <p>{{ center.director|default:"Нет данных" }}</p>
+        <p style="font-weight:600;">Телефон</p>
+        <p>{{ center.phone_number|default:"Нет данных" }}</p>
+ </div>
+
+ <div class="cencont cencont-right" >
+        <p style="font-weight:600;">E-mail</p>
+        <p>{{ center.email|default:"Нет данных" }}</p>
+        <p style="font-weight:600;">Адрес</p>
+        <p>{{ center.address|default:"Нет данных"}}</p>
+
+</div>
+
+
+
+		</div>
+		</div>
+		</div>
+
+
+
+
+
+
+<div class="container " style"padding-left:0px;">
+
+
+<!-- News -->
+    	 <div class="container napr2 "  >
+<p class="cendivtitle">Новости центра</p>
+<a href="{% url 'center_news' center.id %}"><button class="cen " type="submit">Все новости</button></a>
+
+	<div class="news" id="1">
+        {% for obj in news %}
+		<div class="new" onclick="location.href='{% url 'news' obj.id %}';">
+			<div class="news-top">
+			    <div class="lines"><a style="color:white;text-decoration: none;" href="{% url 'news' obj.id %}"><img src="/static/img/HA.png" style="width:14px;height:22px;margin-right: 115px;-moz-transform: skew(25deg);-ms-transform: skew(25deg);-webkit-transform: skew(25deg);-o-transform: skew(25deg);transform: skew(25deg);" ></img></a></div>
+
+
+			</div>
+			<a style="color:white;text-decoration: none;" href="{% url 'news' obj.id %}"><img src="{{ obj.thumb.url}}"></a>
+			<div class="newsfill">
+			<a style="color:white;text-decoration: none;" href="{% url 'news' obj.id %}"><p class="title">{{obj.title}}</p></a>
+			</div>
+				<div class="datefill">
+			<p>{{ obj.date_published|date:'d.m.Y' }}</p>
+			</div>
+		</div>
+		{% empty %}
+		    <p>Новостей данного центра нет</p>
+        {% endfor %}
+        
+
+		</div>
+
+
+
+
+
+
+
+
+	</div>
+
+
+
+	</div>
+</div>
+
+
+<!-- News -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Events -->
+ <div class="container napr2"  >
+
+<p class="cendivtitle">События центра</p>
+<a href="{% url 'center_events' center.id %}"><button class="cen " type="submit">Все события</button></a>
+      <div class="events">
+      {% for event in events %}
+		<div class="event"  onclick="location.href='{% url 'event' event.id %}';">
+			<div class="event-top">
+				<img src="/static/img/HA.png" style="width:14px;height:22px;margin-right: 115px;-moz-transform: skew(25deg);-ms-transform: skew(25deg);-webkit-transform: skew(25deg);-o-transform: skew(25deg);transform: skew(25deg);" ></img>
+			</div>
+			<a href="{% url 'event' event.id %}">	<img src="{{ event.img.url}}"></a>
+			<div class="eventfill">
+			<p>{{event.title}}</p>
+			</div>
+			<div class="placefill">
+			<p>{{obj.place}}</p>
+			</div>
+			<div class="datefill">
+			<p>{{obj.date_event|date:'d.m.Y'}}</p>
+			</div>
+
+		</div>
+		{% empty %}
+		    <p>Событий по данному центру не найдено</p>
+		{% endfor %}
+
+
+
+	</div>
+
+</div>
+
+<!-- Events -->
+
+
+
+
+
+<!-- Projects -->
+<div class="container napr2">
+    <p class="cendivtitle">Проекты центра</p>
+    <a href="{% url 'center_projects' center.id %}"><button class="cen " type="submit">Все проекты</button></a>
+ <div class="events" >
+    {% for project in projects %}
+		<div class="event" style="height: 200px;margin-left: -5px;" onclick="">
+			<div class="event-top">
+				<img src="/static/img/HA.png" style="width:14px;height:22px;margin-right: 125px;-moz-transform: skew(25deg);-ms-transform: skew(25deg);-webkit-transform: skew(25deg);-o-transform: skew(25deg);transform: skew(25deg);margin-top:-22px;" ></img>
+			</div>
+			<a href="{% url 'project' project.id %}">	<img src="{{ project.img.url }}"></a>
+			<div class="eventfill" style="margin-top: -60px;height: 60px;">
+			<p style="font-size:14px;">{{project.description|truncatechars:100}}</p>
+			</div>
+			<div class="placefill" style="height: 55px;margin-top: -115px;">
+			<p>{{project.title|truncatechars:60}}</p>
+			</div>
+
+
+		</div>
+		{% empty %}
+		    <p>Проектов данного центра не найдено</p>
+    {% endfor %}
+	</div>
+    </div>
+
+
+<!-- Projects -->
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

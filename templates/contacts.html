@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+	<div class="container napr2" >
+	<div class="info">
+	<div>
+		<p>Индекс</p>
+	<p>{{ contacts.zip_code }}</p>
+	</div>
+	<div>
+	<p>{{ contacts.city }}</p>
+	<p>{{ contacts.address }}</p>
+	</div>
+	<div>
+	<p>Станция метро</p>
+	<p>{{ contacts.metro }}</p>
+	</div>
+	<div>
+	<p><span class="fa fa-phone contact_icon" ></span>{{ contacts.phone }}</p>
+	<p><span class="glyphicon glyphicon-envelope contact_icon"></span>{{ contacts.email }}</p>
+    </div>
+
+
+	</div>
+	<div class="yan_map">
+	    {{ contacts.map_con| safe}}
+	</div>
+	</div>
+
+{% endblock %}

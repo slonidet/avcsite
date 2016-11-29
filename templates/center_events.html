@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content%}
+<!-- Page Content -->
+<div class="container newsbg ">
+
+
+    <div class="container ne " style="padding-left:35px;" >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Мероприятия по всей России!</h2>
+				<p></p>
+		</div>
+		</div>
+		</div>
+		</div>
+            <!-- Blog Post Content Column -->
+			 <div class="container ne " style="padding-left:35px;" >
+
+        <div class="row eve">
+            <div class="col-lg-8 ">
+
+                <!-- Blog Post -->
+        {% for obj in events %}
+        <a href="{% url 'event' obj.id %}" style="text-decoration:none;"><div  class="newspre ev">
+		<div class="datepre" style="padding-left: 36px;">
+		<p>{{obj.date_event|date:'d.m.Y' }}
+			</p>
+			</div>
+		<div class="titlepre" style="    margin-left: 28%;">
+		<p>{{ obj.title|truncatechars:70 }}
+			</p>
+			</div>
+
+			<img src="{{ obj.img.url }}" style="width:28%;">
+			<div class="newspreblock" style="    width: 71%;">
+			{{ obj.text|striptags|truncatechars:140|safe}}
+
+
+			</div>
+			<hr class="test">
+<div class="evplace">
+    <p>{{obj.place}}</p>
+    </div>
+        </div></a>
+        {% empty %}
+    	    <h1>Событий по данному запросу нет</h1>
+        {% endfor %}
+        
+        {% if events.paginator.page_range|length > 1 %}
+            <div class="page">
+                <ul class="pagination">
+                    {% if events.has_previous %}
+                        <li><a href="{% url 'center_events' center_pk=center page=events.previous_page_number %}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% if events.number > 5 %}
+                        <li><a href="{% url 'center_events' center_pk=center page=1 %}">1</a></li>
+                        <li><a>...</a></li>
+                    {% endif %}
+                    {% for page in events.paginator.page_range %}
+                    {% if page <= max_index and page >= min_index %}
+                        {% if page == events.number %}
+                            <li class="active"><a href="{% url 'center_events' center_pk=center page=page %}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'center_events' center_pk=center page=page %}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    {% if events.number < last_page %}
+                        <li><a>...</a></li>
+                        <li><a href="{% url 'center_events' center_pk=center page=events.paginator.num_pages %}">{{ events.paginator.num_pages }}</a></li>
+
+                    {% endif %}
+                    {% if events.has_next %}
+                        <li><a href="{% url 'center_events' center_pk=center page=events.next_page_number %}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+        
+
+
+</div>
+
+
+                    <div class="col-lg-4 ">
+             <div class="fokr">
+                 <p>События по регионам</p>
+                 <hr class="bluehr">
+                 <ul>
+                    <li><span><a href="{% url 'all_events' %}">Все события</a></span></li>
+                    {% for okrug in okruga %}
+					    <li><span><a href="{% url 'okrug_events' okrug.0 %}">{{ okrug.1 }}</a></span></li>
+                    {% endfor %}
+                </ul>
+</div>
+   </div>
+
+
+   </div>
+                 </div>
+{% endblock %}

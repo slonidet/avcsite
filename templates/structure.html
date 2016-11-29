@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<script>
+$(document).ready(function() {
+
+    	$("#direc").hide();
+    	});
+</script>
+<div class="container napr2" style="">
+    
+
+<div class="sc_button">
+	    	<div class="skew skew-blue" id="video_media"><h2 class="structure-title">Совет </br> Ассоциации</h2></div>
+		  	<div class="skew2 skew-gray" id="photo_media"><h2 class="direc-title">Исполнительная </br> дирекция</h2></div></div>
+</div>
+
+</div>
+
+	<div class="container napr2" >
+
+	<div class="struc" id="struc">
+    {% spaceless %}
+    {% for obj in sovets %}
+        {% if obj.is_major %}
+        <div class="structures2">
+        	 <img  src="{{ obj.img.url }}"  class="round" />
+        	 <p class="fio2">{{ obj.full_name }}</p>
+        	 <p class="dolgn2">{{ obj.desc }}</p>
+        	 <hr class="aboutdirline2">
+        	 <div class="aboutdir2">
+        	 <p >{{ obj.about }}</p>
+    	    </div>
+    	</div>
+        {% endif %}
+    {% endfor %}
+    {% endspaceless %}
+    {% for obj in sovets %}
+    	{% if not obj.is_major %}
+        	<div class="structures3">
+        	 <img  src="{{ obj.img.url }}"  class="round" />
+        	 <p class="fio3">{{ obj.full_name }}</p>
+        	 <p class="dolgn3">{{ obj.desc }}</p>
+        	 <hr class="aboutdirline3">
+        	 <div class="aboutdir3">
+        	 <p >{{ obj.about }}</p>
+        	</div>
+        	</div>
+        {% endif %}
+	{% endfor %}
+    </div>
+
+
+
+	<div class="struc" id="direc">
+    {% spaceless %}
+	{% for obj in directors %}
+        {% if obj.is_major %}
+        <div class="structures2 structure-center">
+        	 <img  src="{{ obj.img.url }}"  class="round" />
+        	 <p class="fio2">{{ obj.full_name }}</p>
+        	 <p class="dolgn2">{{ obj.desc }}</p>
+        	 <hr class="aboutdirline2">
+        	 <div class="aboutdir2">
+        	 <p >{{ obj.about }}</p>
+    	    </div>
+    	</div>
+    	</br>
+    	{% endif %}
+    {% endfor %}
+    {% endspaceless %}
+    {% for obj in directors %}
+    	{% if not obj.is_major %}
+        	<div class="structures3">
+        	 <img  src="{{ obj.img.url }}"  class="round" />
+        	 <p class="fio3">{{ obj.full_name }}</p>
+        	 <p class="dolgn3">{{ obj.desc }}</p>
+        	 <hr class="aboutdirline3">
+        	 <div class="aboutdir3">
+        	 <p >{{ obj.about }}</p>
+        	</div>
+        	</div>
+        {% endif %}
+	{% endfor %}
+	</div>
+
+	</div>
+
+<script>
+    $(function() {
+    $("#video_media").click(function() {
+        if( $("#video_media").hasClass("skew-gray")) {
+            $("#video_media").removeClass("skew-gray");
+            $("#video_media").addClass("skew-blue");
+            $("#photo_media").removeClass("skew-blue")
+            $("#photo_media").addClass("skew-gray");
+            $("#struc").hide();
+		    $("#direc").show();
+		    
+        };
+         $("#direc").hide();
+		   $("#struc").show();
+        
+    });
+    $("#photo_media").click(function() {
+        if( $("#photo_media").hasClass("skew-gray")) {
+            $("#photo_media").removeClass("skew-gray");
+            $("#photo_media").addClass("skew-blue");
+            $("#video_media").removeClass("skew-blue")
+            $("#video_media").addClass("skew-gray");
+            $("#direc").hide();
+		    $("#struc").show();
+        };
+        
+		 $("#struc").hide();
+		    $("#direc").show();
+    });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+
+
+{% for partner in partners %}
+<div id="{{partner.id}}" class="modalDialog">
+	<div>
+		<h2>{{partner.name}}</h2>
+		<p>{{partner.description}}</p>
+	    <div class="modal_butt">
+	        
+	    <a href="#close">Закрыть</a></div>
+	</div>
+</div>
+{% endfor %}
+
+	<div class="container newsbg ">
+
+
+    <div class="container napr2" >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Партнеры Ассоциации</h2>
+				<p></p>
+		</div>
+		</div>
+		</div>
+		</div>
+
+
+    {% for partner in partners %}
+<div class="container napr2">
+    <div class="partnerspage">
+ <div class="imageborder">
+    <div style="text-align:center">
+        <a href="{{ partner.source }}"><img src="{{ partner.thumb.url }}"></img></a>
+    </div>
+    
+</div>
+<div class="partfoc">
+<p class="partnertitle">{{ partner.name }}</p>
+<div class="partbutt"><a href="#{{partner.id}}" >Взаимодействие с партнёром</a><img src="{% static 'img/HA.png' %}" ></img>
+    </div>
+</div>
+
+
+
+
+    </div>
+
+<hr>
+
+</div>
+    {% endfor %}
+
+
+
+
+{% endblock %}

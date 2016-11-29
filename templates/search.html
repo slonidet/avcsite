@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+<div class="container napr2 search_container">
+    <div class="big_search">
+        <form method="get" action="http://avcrf.ru/search/">
+        <input type="hidden" name="searchid" value="2285610"/>
+        <!--<input type="submit" />-->
+        <input type="text" name="text" placeholder="Поиск по сайту" ><button class="search_butt" type="submit" ><i class="fa fa-search fa-2x" aria-hidden="true"></i></button>
+        </form>
+    </div>
+    <div id="ya-site-results" onclick="return {'tld': 'ru','language': 'ru','encoding': 'utf-8','htmlcss': '1.x','updatehash': true}"></div><script type="text/javascript">(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0];s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Results.init();})})(window,document,'yandex_site_callbacks');</script>
+</div>
+
+
+{% endblock %}

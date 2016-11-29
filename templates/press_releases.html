@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+
+
+<div class="container newsbg ">
+
+
+    <div class="container ne main_container"  >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Пресс-релизы</h2>
+				<p></p>
+		</div>
+		</div>
+		</div>
+		</div>
+
+
+<div class="container ne "  >
+{% for obj in releases %}
+<div class="press">
+    <div class="pressdate"><p>{{ obj.press_date|date:"d.m.Y"}}</p></div>
+<div class="pressimg"><img src="{{ obj.thumb.url }}"></div>
+<div class="presstext">
+          <p class="presstitle">{{ obj.title|truncatechars:70}}</p>
+          {% spaceless %}{{ obj.text|striptags|truncatechars:180|safe}}{% endspaceless %}
+
+
+</div>
+
+          <div class="partbutt" style="margin-left: 190px;margin-top: 8px;"><a href="{% url 'one_release' obj.id %}">Читать далее</a><img  src="{% static 'img/HA.png' %}" ></img></div>
+</div>
+{% endfor %}
+</div>
+
+
+
+{% endblock %}

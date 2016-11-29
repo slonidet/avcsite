@@ -1,0 +1,481 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load youtube_filt %}
+
+{% block content %}
+	<!--Слайдер блок-->
+		  <div class="container-fluid napr2" style="">
+	<div class="slider-container" id="caption-slide">
+		<div class="slider">
+		    <div class="switch" id="prev"><span></span></div>
+		    <div class="switch" id="next"><span></span></div>
+		    {% for obj in images %}
+			<div class="slide">
+				<a href="{{ obj.source }}"><img src="{{ obj.image.url }}" alt="" ></a>
+
+			</div>
+			{% endfor %}
+
+		</div>
+
+		<div class="switch" id="prev"><span></span></div>
+		<div class="switch" id="next"><span></span></div>
+	</div>
+	<div class="mediablock">
+	    <div class="mdb" >
+			<div class="mdb-top" >
+				<div class="lines" ><p><a href="#win3"><img class="play" src="{% static 'img/Video.png' %}" style="padding: 100px;
+    height: 270px;
+    width: 300px;
+    " ></a></p></div>
+
+			</div>
+			<a href="#win3"><img src="{% static 'img/Video.jpg' %}" ></a>
+
+
+					<a href="#x" class="overlay" id="win3"></a>
+        <div class="popup">
+            {% for obj in video %}
+		    <iframe width="480" height="360" src="{{ obj.source| embed_filt }}" frameborder="0" allowfullscreen></iframe>
+		    {% endfor %}
+            <a class="close" title="Закрыть" href="{% url 'home' %}" onclick = "{% url 'home' %}(); return false;"></a>
+        </div>
+
+		</div>
+	</div>
+
+</div>
+	<!--Слайдер блок-->
+
+
+			<!-- Направления -->
+		<div class="container napr">
+			 <div class="container napr2">
+			   <div class="titlebl kar2">
+			     <img src="{% static 'img/ld.png' %}" class="left"></img>
+			    <div class="titlezag"> <div class="titlezag2 kar"><a href="">Направления работы</a></div></div>
+			    <img src="{% static 'img/rd.png' %}" class="right"></img>
+			   </div>
+
+			<div class="directions">
+		<div class="dir" >
+		<img src="{% static 'img/directions/1.png' %}">
+			<div class="verticalLine">
+
+            <p>Организация значимых мероприятий</p>
+
+            </div>
+
+
+
+		</div>
+
+		<div class="dir" >
+	<img src="{% static 'img/directions/2.png' %}">
+			<div class="verticalLine">
+
+            <p>Объединение волонтерских организаций</p>
+
+            </div>
+
+
+
+		</div>
+
+		<div class="dir" >
+	<img src="{% static 'img/directions/3.png' %}">
+			<div class="verticalLine">
+
+            <p>Реализация образовательных программ</p>
+
+            </div>
+
+
+
+		</div>
+		</div>
+
+			<div class="directions">
+		<div class="dir" >
+		<img src="{% static 'img/directions/4.png' %}">
+			<div class="verticalLine">
+
+            <p>Разработка методических рекомендаций</p>
+
+            </div>
+
+
+
+		</div>
+
+		<div class="dir" >
+		<img src="{% static 'img/directions/5.png' %}">
+			<div class="verticalLine">
+
+            <p>Формирование экспертного сообщества</p>
+
+            </div>
+
+
+
+		</div>
+
+		<div class="dir" >
+		<img src="{% static 'img/directions/6.png' %}">
+			<div class="verticalLine">
+
+            <p>Поддержка волонтерских инициатив</p>
+
+            </div>
+
+
+
+		</div>
+		</div>
+			</div>
+		</div>
+	<!-- Направления -->
+
+		<!-- Новости -->
+	<div class="container napr2">
+	
+		 <div class="titlebl">
+			     <img src="{% static 'img/dgl.png' %}" class="left"></img>
+			    <div class="titlenews"> <div class="titlenews2 "><a href="{% url 'all_news' %}">Новости</a></div></div>
+			    <img src="{% static 'img/dgr.png' %}" class="right"></img>
+			   </div>
+
+
+
+    <div class="">
+	<div class="news"  id="1">
+	    {% for new in news %}
+		<div class="new" onclick="location.href='{% url 'news' new.id %}';">
+			<div class="news-top">
+			    <div class="lines nolines"><a style="color:white;text-decoration: none;" href="{% url 'news' new.id %}"><img src="{% static 'img/HA.png' %}" style="-moz-transform: skew(25deg);-ms-transform: skew(25deg);-webkit-transform: skew(25deg);-o-transform: skew(25deg);transform: skew(25deg);" ></img></a></div>
+
+
+			</div>
+			<a style="color:white;text-decoration: none;" href="{% url 'news' new.id %}"><img src="{{ new.thumb.url }}"></a>
+			<div class="newsfill">
+			<a style="color:white;text-decoration: none;" href="{% url 'news' new.id %}"><p class="title">{{ new.title }}</p></a>
+			</div>
+				<div class="datefill">
+			<p>{{ new.date_published|date:"d.m.Y"}}</p>
+			</div>
+		</div>
+        {% endfor %}
+        </div>
+	</div>
+    </div>
+
+
+	
+</div>
+        <!-- Новости -->
+	 <!-- Центры -->
+<div class="container karta">
+  <div class="container napr2">
+ <div class="titlebl kar2">
+			     <img src="{% static 'img/ld.png' %}" class="left"></img>
+			    <div class="titlezag"> <div class="titlezag2 kar"><a href="{% url 'centers' %}">Волонтерские центры</a></div></div>
+			    <img src="{% static 'img/rd.png' %}" class="right"></img>
+			   </div>
+
+
+
+
+
+  <div id="vmap" style="width: 600px; height: 350px;margin-left:20px;display:block;"></div>
+<script type="text/javascript">
+<!--
+    function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none',
+		  vmap.style.display = 'block'
+		  ;
+       else
+          e.style.display = 'block',
+		  vmap.style.display = 'none'
+		  ;
+    }
+
+//-->
+</script>
+
+<a id="spbutton"   onclick="toggle_visibility('spisok'),$(this).hide(),$('#spbutton2').show();"><div id ="spb" class="spbutton">Показать список областей</div></a>
+<a id="spbutton2"   onclick="toggle_visibility('spisok'),$(this).hide(),$('#spbutton').show();"><div id ="spb" class="spbutton">Скрыть список областей</div></a>
+<div id="spisok" class="spisok scrollbar">
+<ul>
+    {% for region in regions %}
+    <li><span><a onclick='$("#okruga").children().hide();$("#{{region.key}}").show();' class="{{region.key}} ">  {{region.title}} </a></span></li>
+    {% endfor %}
+ </ul>
+</div>
+<div id="okruga" class="okruga scrollbar"  >
+ {% for region in regions %}
+    <ul id="{{ region.key }}">
+
+    	  <p>{{region.title}}</p>
+    	  <hr class="line2">
+    	  {% spaceless %}
+    	  {% for center in centers %}
+
+    	    {% if center.region_id == region.key %}
+    	        <li>
+    	            {% if center.title != "Ваш центр может стать первым!" %}
+    	                
+    	                <a href="{% url 'center' center.id %}">{{center.title}}</a>
+    	            {% else %}
+    	                <script type="text/javascript" charset="utf-8">
+    		            $(document).ready(function () {
+    		                jQuery('#vmap').vectorMap('set', 'colors', { {{region.key}}: "#606E8C"});
+    		            });
+    		            </script>
+    	                <a href="{% url 'join' %}">{{center.title}}</a>
+    	                
+    	            {% endif %}
+    	        </li>
+    	    {% endif %}
+    	  {% endfor %}
+
+    	  {% endspaceless %}
+    </ul>
+{% endfor %}
+{% comment %} {% regroup centers by region_id as centers_list %}
+{% for center in centers_list %}
+    {% with key=center.grouper %}
+    <ul id="{{ key }}">
+
+    	  <p>{{reg_name|get_item:key}}</p>
+    {% endwith %}
+    	<hr class="line2">
+    	{% for item in center.list %}
+    	    <li><a href="{{item.source}}">{{item.title}}</a></li>
+    	{% endfor %}
+    </ul>
+{% endfor %} {% endcomment %}
+
+				</div>
+
+		<script>
+		$('.panel > .title').click(function(){
+    $(this).parent().toggleClass('open');
+});
+		</script>
+
+
+
+
+
+
+
+
+
+	</div>
+</div>
+
+	  <!-- Центры -->
+	 <!-- События -->
+<div class="container napr2">
+
+	 <div class="titlebl" style="margin-top:20px;">
+			     <img src="{% static 'img/dgl.png' %}" class="left"></img>
+			    <div class="titlenews"> <div class="titlenews2 "><a href="{% url 'all_events' %}">События</a></div></div>
+			    <img src="{% static 'img/dgr.png' %}" class="right"></img>
+			   </div>
+
+
+	 <div class="events">
+	 {% for event in events %}
+		<div class="event"  onclick="location.href='{% url 'event' event.id%}';">
+			<div class="event-top">
+				<img src="{% static 'img/HA.png' %}" style="-moz-transform: skew(25deg);-ms-transform: skew(25deg);-webkit-transform: skew(25deg);-o-transform: skew(25deg);transform: skew(25deg);" ></img>
+			</div>
+			<a href="{% url 'event' event.id%}">	<img src="{{ event.img.url }}"></a>
+			<div class="eventfill">
+			<p>{{ event.title}}</p>
+			</div>
+			<div class="placefill">
+			<p>{{event.place}}</p>
+			</div>
+			<div class="datefill">
+			<p>{{event.date_event|date:"d.m.Y"}}</p>
+			</div>
+
+		</div>
+		{% endfor %}
+
+
+
+
+	</div>
+
+</div>
+      <!-- События -->
+
+	 <!-- Мнения и истории -->
+<div class="container opin" >
+ <div class="container napr2">
+    <div class="titlebl" style="margin-top:20px;margin-bottom:30px;">
+			     <img src="{% static 'img/dbl.png' %}" class="left"></img>
+			    <div class="titlezag"> <div class="titlezag2 "><a href="{% url 'opinions' %}">Мнения</a></div></div>
+			    <img src="{% static 'img/dbr.png' %}" class="right"></img>
+			   </div>
+
+
+
+<div class="opinions">
+
+        {% for opinion in opinions %}
+		<a href="{% url 'opinion' opinion.id %}"><div class="opinion">
+
+		<div class="quote">
+		<img src="{% static 'img/kav2.png' %}">
+		</div>
+
+
+		<div class="corner">
+
+                <img src="{{ opinion.home_thumb.url }}">
+                </div>
+			<div class="opinion-top">
+
+				<p class="name">{{ opinion.name}}</br>{{ opinion.fam }}</p>
+				<p class="niz">{{ opinion.desc}}</p>
+
+			</div>
+            <hr class="history2">
+			<div class="opinion-bot">
+				<p>{{ opinion.text|safe }}</p>
+			</div>
+		</div></a>
+		{% endfor %}
+
+	</div>
+	</div>
+	</div>
+
+	<div class="container opin2" >
+ <div class="container napr2">
+	<div class="titlebl" style="margin-top:20px;margin-bottom:30px;">
+			     <img src="{% static 'img/dbl.png' %}" class="left"></img>
+			    <div class="titlezag"> <div class="titlezag2 "><a href="{% url 'stories' %}">Истории успеха</a></div></div>
+			    <img src="{% static 'img/dbr.png' %}" class="right"></img>
+			   </div>
+	<div class="stories">
+    {% for story in history %}
+
+	<a href="{% url 'story' story.id %}"><div class="story">
+
+		<div class="corner2">
+
+                <img src="{{ story.home_thumb.url }}">
+
+                </div>
+			<div class="story-top">
+
+				<p class="name2">{{ story.name }}</br>{{ story.fam }}</p>
+
+			</div>
+			<hr class="history">
+			<div class="story-bot">
+				{{story.text|safe}}
+			</div>
+		</div></a>	
+	{% endfor %}
+
+	</div>
+
+
+</div>
+</div>
+	 <!-- Мнения и истории-->
+
+	  <!-- Партнеры-->
+<div class="container napr2">
+
+	 <div class="titlebl" style="margin-top:20px;">
+			     <img src="{% static 'img/dgl.png' %}" class="left"></img>
+			    <div class="titlenews"> <div class="titlenews2 "><a href="{% url 'partners' %}">Партнеры</a></div></div>
+			    <img src="{% static 'img/dgr.png' %}" class="right"></img>
+			   </div>
+	<div class="part">
+
+	<script>
+	$(document).ready(function(){
+  $('.slider1').bxSlider({
+    slideWidth: 190,
+
+    minSlides: 2,
+    maxSlides: 5,
+    slideMargin: 10
+  });
+});
+</script>
+
+<div class="slider1">
+    {% for partner in partners %}
+  <div class="slide"> <a href="{{ partner.source }}" target="_blank"><img src="{{ partner.thumb.url }}" class="partimg"></img></a></div>
+{% endfor %}
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+	  <!-- Партнеры-->
+<div style="display: none;" class="hidden-phone">
+  <div class="box-modal" id="boxUserFirstInfo">
+
+
+    <div class="soc">
+        <p><strong>Следите за нами в социальных сетях</strong></p>
+        <a href="https://www.facebook.com/AVCRussia/" target="_blank"><i class="fa fa-2x fa-facebook"></i></a>
+        <a href="https://twitter.com/AVCRF" target="_blank"><i class="fa fa-2x fa-twitter"></i></a>
+        <a href="https://www.instagram.com/avcrf/" target="_blank"><i class="fa fa-2x fa-instagram"></i></a>
+        <a href="https://vk.com/avcrf " target="_blank"><i class="fa fa-2x fa-vk"></i></a>
+
+    </div>
+    <div class="modal-news">
+        <p><strong>Подпишитесь на наши новости с помощью email</strong></p>
+        <div class="" >
+     <form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=avcrf/HMiK', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+         <p><input type="text"  name="email"/></p><input type="hidden" value="avcrf/HMiK" name="uri"/><input type="hidden" name="loc" value="ru_RU"/>
+         <input type="submit" value="Подписаться" /><p class="sub_desc"> Или на нашу rss-ленту: avcrf.ru/news/sitenews</p></form>
+ </div>
+    </div>
+    <div class="box-modal_close arcticmodal-close modal_butt"><a>Закрыть</a></div>
+</div>
+</div>
+ <script>
+ //модальное окно
+(function($) {
+$(function() {
+
+
+if($(document).width()>700 && !$.cookie('avc_was')){
+    $('#boxUserFirstInfo').arcticmodal({
+      closeOnOverlayClick: true,
+      closeOnEsc: true
+    });
+}
+$.cookie('avc_was', true, {
+    expires: 7,
+    path: '/'
+  });
+  
+
+})
+})(jQuery)
+</script>
+{% endblock %}

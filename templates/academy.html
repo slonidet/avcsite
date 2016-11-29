@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+    <div class="academy">
+    <div class="container napr2">
+        <div class="slider-container academy-container-slider" id="caption-slide" >
+    		<div class="slider slider">
+    		    {% for obj in images %}
+        		<div class="slide slide full_photo academy_photo">
+        		    <img src="{{ obj.thumb.url }}" alt="" >
+        		</div>
+        		{% endfor %}
+            
+        	</div>
+        
+        	<div class="switch blue-switch" id="prev"><span></span></div>
+        	<div class="switch blue-switch" id="next"><span></span></div>
+    	</div>
+    	<div class="academy_logo">
+    	    <img src="{% static 'img/no_logo.jpg' %}" alt="" />
+    	</div>
+        <div class="academy_text">
+            <p>
+                Академия волонтёрских центров – это комплексная система обучения лидеров добровольческого движения России.</br>
+    Цель нашей работы – это повышение компетентности людей в сфере организации волонтерской деятельности и реализации эффективных социальных практик.
+            </p>
+        </div>
+    </div>
+    </div>
+    <div class="container napr2">
+    <div class="experts">
+        <div class="titlebl">
+			 <img src="{% static 'img/dgl.png' %}" class="left"></img>
+			 <div class="titlenews "> 
+			 <div class="titlenews2 ">
+			     <a>Эксперты</a>
+			 </div>
+			 </div>
+	        <img src="{% static 'img/dgr.png' %}" class="right"></img>
+	    </div>
+	<div class="part center-part">
+        
+    
+	<script>
+        	$(document).ready(function(){
+          $('.slider1').bxSlider({
+            slideWidth: 200,
+        
+            minSlides: 1,
+            maxSlides: 4,
+            slideMargin: 10
+          });
+        });
+         </script>  
+	    <div class="slider1">
+        {% for obj in experts %}
+            <div class="slide"> <img src="{{ obj.thumb.url }}" class="partimg expertimg"></img>
+            <p class="name-expert">{{ obj.name }}</p>
+            <p class="post-expert">{{ obj.desc}}</p>
+          </div>
+        {% endfor %}
+          
+        </div>
+    </div>
+    </div>
+    </div>
+    
+    <div class="container napr2">
+        <div class="materials">
+        <div class="titlebl">
+			 <img src="{% static 'img/dgl.png' %}" class="left"></img>
+			 <div class="titlenews"> 
+			 <div class="titlenews2 expertstitle">
+			     <a>Материалы</a>
+			 </div>
+			 </div>
+	        <img src="{% static 'img/dgr.png' %}" class="right"></img>
+	    </div>
+	    <div class="academy_materials">
+	        {% for obj in materials %}
+	        <div class="material ">
+	            <div class="material_title">
+	                <p>{{ obj.title }}</p>
+	            </div>
+	            <div class="material_buttons">
+	                <a title="Посмотреть видео" href="{{ obj.video }}"><div>
+	                     <i class="fa fa-play" aria-hidden="true"></i>
+	                </div></a>
+	                 <a title="Скачать лекцию" {% if obj.lecture %} href="{{ obj.lecture.url }}" {% else %}  href="#" {% endif %} download><div>
+	                     <i class="fa fa-file-word-o" aria-hidden="true"></i>
+	                </div></a>
+	                <a title="Скачать презентацию" {% if obj.presentation %} href="{{ obj.presentation.url }}"{% else %}  href="#" {% endif %} download><div>
+	                    <i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>
+	                </div></a>
+	                
+	            </div>
+	        </div>
+	        {% endfor %}
+	    </div>
+	    </div>
+    </div>
+    <div class="container napr2">
+        <div class="webinars">
+            {% for obj in webinars %}
+            <div class="webinar">
+                {% if obj.img %}
+                    <img src="{{ obj.img.url }}" alt="" />
+                {% else %}
+                    <img src="{% static 'img/no_logo.jpg' %}" alt="" />
+                {% endif %}
+                <div class="webinar_date">
+                    <p>{{ obj.date|date:'d.m.Y' }}</p>
+                </div>
+                <div class="webinar_title">
+                    <p>{{ obj.title }}</p>
+                </div>
+                <div class="webinar_teacher">
+                    <p>{{ obj.teacher }}</p>
+                </div>
+                <a href="{{ obj.webinar }}"><div class="webinar_button">
+                    <p>Принять участие в вебинере</p>
+                </div></a>
+            </div>
+            {% endfor %}
+        </div>
+        
+        
+        <div class="academy_bottom">
+            <div class="academy_bottom_text">
+                <p>ЕСТЬ ИДЕИ И ПРЕДЛОЖЕНИЯ?</p>
+                <div class="academy_bottom_button" id="web_button">
+                    <p>НАПИШИ НАМ!</p>
+                </div>
+            </div>
+            <div class="academy_bottom_img">
+                <img src="{% static 'img/Suggestions.png' %}" alt="" />
+            </div>
+        </div>
+        
+        <div style="display: none;" id="academy_modal">
+            <div class="box-modal academy_form" id="boxUserFirstInfo">
+                
+                
+                <form action="" method="post" accept-charset="utf-8" id="write_form">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <p>
+                           <p> <label>{{ field.label }} {% if field.field.required %}<span>*</span>{% endif %} </label></p>
+                            {{ field }}
+    
+                            {{ field.errors }}
+                        </p>
+                     {% endfor %}
+                     <div class="req_field">
+                         <p>*-Обязательное поле</p>
+                     </div>
+                      <div class="ajax_error" style="display:none">
+                        <div class="ajax_img">
+                            <i class="fa fa-exclamation-circle fa-5x" aria-hidden="true"></i>
+                            
+                        </div>
+                        <div class="ajax_msg">
+                            <p id="error"></p>
+                        </div>
+                        
+                    </div>
+                    <div class="ajax_success" style="display:none">
+                        <div class="ajax_img">
+                            <i class="fa fa-check-circle-o fa-5x" aria-hidden="true"></i>
+                            
+                        </div>
+                        <div class="ajax_msg">
+                            <p id="success"></p>
+                        </div>
+                    </div>
+                    <input type="submit" value="Отправить" class="btn academy-btn">
+                    
+                </form>
+                <div class="box-modal_close arcticmodal-close academy_close"><p>закрыть</p></div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+    //модальное окно
+    (function($) {
+    $(function() {
+       $("#web_button").click(function () {
+    
+        // Покажем всплывающее окно
+        $('#boxUserFirstInfo').arcticmodal({
+          closeOnOverlayClick: true,
+          closeOnEsc: true
+        });
+    
+      });
+    
+    })
+    })(jQuery)
+    </script>
+    <script type="text/javascript" charset="utf-8">
+        //ajax-обраобтка
+        $(document).on("submit","#write_form", function(e){
+            $(".ajax_error").hide();
+            $(".ajax_success").hide();
+            e.preventDefault();
+            
+            $.ajax({
+               
+               type:"POST",
+               url:"/academy/write/",
+               data: {
+                   region:$('#id_region').val(),
+                   name:$('#id_name').val(),
+                   webinar:$('#id_webinar').val(),
+                   idea:$('#id_idea').val(),
+                   csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+               },
+                
+                success:function(data){
+                        if(data.errors === "True"){
+                            $(".ajax_error").show();
+                            $("#error").text(data.message);
+                        };
+                        if(data.errors === "False"){
+                            $(".ajax_success").show();
+                            $("#success").text(data.message);
+                        };
+                                                    
+
+                }
+            });
+        });
+    </script>
+{% endblock %}

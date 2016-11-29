@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load ext_filt %}
+{% block content%}
+<div class="container napr2">
+    <div class="fes_logo">
+        <img src="{% static 'img/logonobg.png' %}" alt="" />
+    </div>
+    
+    <div class="experts">
+        <div class="titlebl">
+			 <img src="{% static 'img/dgl.png' %}" class="left expert-left"></img>
+			 <div class="titlenews experts-title"> 
+			 <div class="titlenews2 ">
+			     <a>Члены экспертного совета</a>
+			 </div>
+			 </div>
+	        <img src="{% static 'img/dgr.png' %}" class="right expert-right"></img>
+	    </div>
+	<div class="part center-part">
+        
+    
+	<script>
+        	$(document).ready(function(){
+          $('.slider1').bxSlider({
+            slideWidth: 200,
+        
+            minSlides: 1,
+            maxSlides: 4,
+            slideMargin: 10
+          });
+        });
+         </script>  
+	    <div class="slider1">
+        {% for obj in experts %}
+            <div class="slide"> <img src="{{ obj.thumb.url }}" class="partimg expertimg"></img>
+            <p class="name-expert">{{ obj.name }}</p>
+            <p class="post-expert">{{ obj.desc}}</p>
+          </div>
+        {% endfor %}
+          
+        </div>
+    </div>
+    </div>
+    <div class="materials">
+        <div class="titlebl">
+			 <img src="{% static 'img/dgl.png' %}" class="left"></img>
+			 <div class="titlenews"> 
+			 <div class="titlenews2 expertstitle">
+			     <a>Материалы</a>
+			 </div>
+			 </div>
+	        <img src="{% static 'img/dgr.png' %}" class="right"></img>
+	    </div>
+	    <div class="col-lg-8">
+	        
+	   
+	    {% for obj in materials %}
+         <div class="docs  ">
+            <img src="{% static 'img/doc.png' %}">
+         <div class="docstext">
+           <p style="height:45px;">{{ obj.title }}</p>
+           <a href="{{ obj.document.url }}" download>{{ obj.document.size|filesizeformat }} / {{ obj.document.url| ext_filt }} / Скачать </a>
+    
+         </div>
+    
+         </div>
+        {% endfor %}
+        </div>
+	</div>
+	<div class="col-lg-4 " style="margin-top:10px;">
+			<h4 style="background-color:#2e3192;margin-bottom:0px;padding-bottom:5px;padding-top:5px;padding-left:5px;color:white;">Деятельность Экспертного совета</h4>
+			{% for obj in activity %}
+                <a href="{% url 'news' obj.id %}"><div id="div1" class="morenews">
+
+			<img src="{{ obj.thumb.url }}" >
+			<div class="morenewsblock">
+			<p>{{ obj.title}}</p>
+			<hr class="hrnews">
+			<p>{{obj.date_published|date:'d.m.Y' }}
+			</p>
+			</div>
+			<hr class="test">
+			</div></a>
+            {% endfor %}
+
+
+
+        <!-- /.row -->
+
+    </div>
+</div>
+{% endblock %}

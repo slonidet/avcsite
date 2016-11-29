@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+<!-- Page Content -->
+    <div class="container napr2 " style="padding-left:35px;" >
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-8 ">
+
+                <!-- Blog Post -->
+
+                <!-- Title -->
+                <h2>{{event.title}}</h2>
+
+
+
+
+                <hr style="margin-top:10px;margin-bot:0px;">
+<p style="color:black;margin-bottom: 10px;">{{event.place}}</p>
+
+<div class="imageContainer img-responsive" style="position:relative;margin-top:-20px;"><br><br><p>  {{event.date_event}}</p>   </div>
+                <!-- Preview Image -->
+            <div class="slider-container news-container-slider" id="caption-slide" style="width:100%;margin-left:0px;">
+		<div class="slider slider">
+		{% for photo in images %}
+    			<div class="slide slide full_photo news-slider">
+    				<a href="{{ photo.img.url }}" ><img src="{{ photo.img.url }}" alt="" ></a>
+    
+    			</div>
+    			
+            {% endfor %}
+    		</div>
+    
+    		<div class="switch blue-switch" id="prev"><span></span></div>
+    		<div class="switch blue-switch" id="next"><span></span></div>
+	</div>
+            
+			<div >
+			<h4>Поделиться</h4>
+
+
+                		<div class="share">
+            <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+                <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+                <div class="ya-share2" data-services="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus" data-description:vkontakte="{{event.text|safe|truncatechars:500 }}" data-size="m" data-limit="3"></div>
+
+
+
+                </div>
+                <hr>
+
+                <!-- Post Content
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p> -->
+                    {{ event.text|safe }}
+                
+                <a href="{{event.link_event}}"><div class="event_button">
+                    <p>ПРИСОЕДИНИТЬСЯ</p>
+                </div></a>
+                
+                <hr>
+
+
+
+
+</div>
+            <!--<div class="news_documents">
+                <p><strong>Прикреплённые файлы: </strong></p>
+                <p> <a href="{{ news.news_docments.document.url }}" download>документ </a></p>
+                <p> <a href="{{ news.news_docments.document.url }}" download>документ </a></p>
+                <p> <a href="{{ news.news_docments.document.url }}" download>документ </a></p>
+            </div>-->
+            </div>
+            
+
+            
+        
+            
+
+            <div class="col-lg-4 " style="margin-top:82px;">
+			<h4 style="background-color:#2e3192;margin-bottom:0px;padding-bottom:5px;padding-top:5px;padding-left:5px;color:white;">Еще события</h4>
+			{% for obj in other %}
+                <a href="{% url 'event' obj.id %}"><div id="div1" class="morenews">
+
+			<img src="{{ obj.img.url }}" >
+			<div class="morenewsblock">
+			<p>{{ obj.title}}</p>
+			<hr class="hrnews">
+			<p>{{obj.date_event|date:'d.m.Y' }}
+			</p>
+			</div>
+			<hr class="test">
+			</div></a>
+            {% endfor %}
+
+
+
+        <!-- /.row -->
+
+</div>
+   </div>
+		</div>
+
+{% endblock %}

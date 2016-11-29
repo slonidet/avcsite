@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+
+<div class="container newsbg ">
+
+
+    <div class="container napr2 " >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Обратиться в Ассоциацию</h2>
+				<p class="write_p">Вы можете обратиться в Ассоциацию любым из предложенных способов и получить ответ в письменном виде, по электронной почте или лично в течении 30 дней с момента обращения </p>
+		</div>
+		</div>
+		</div>
+		</div>
+
+
+
+
+
+
+
+<div class="container napr2" >
+<form class="contact_form" action="" method="post" name="contact_form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <ul>
+        <li>
+             <h2>Напишите ваше обращение</h2>
+
+        </li>
+        {% if success == "good" %}
+        <div class="container newsbg " style="    opacity: 0.8;">
+
+
+    <div class="container napr2 "  >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2 style="font-size: 24px; line-height: 1; margin-top: 5px;">Благодарим Вас за обращение Ассоциацию</h2>
+				<p style="line-height: 1; font-size: 16px;"> Ваше сообщение будет рассмотрено в течение 30 дней.<p>
+
+                 <p style="line-height: 1; font-size: 16px;">С уважением.</p>
+               <p style="line-height: 1; font-size: 16px;">Команда Ассоциации волонтерских центров</p>
+		</div>
+
+		</div>
+		</div>
+		</div>
+        
+
+{% elif success == "errors" %}
+<div class="container napr2 " style="color:white;" >
+    <div class="dirbg4" style="margin-left: -5px;padding-left: 20px;padding-top: 20px;height: 150px;opacity: 0.8;">
+    
+       <h2 style="font-size: 24px; line-height: 1; margin-top: 5px;">Извините, произошла ошибка</h2>
+				<p style="line-height: 1; font-size: 16px;">Проверьте, заполнены ли вы все поля.Если поля заполнены верно, попробуйте совершить отправку позже.<p>
+
+                 <p style="line-height: 1; font-size: 16px;">С уважением.</p>
+               <p style="line-height: 1; font-size: 16px;">Команда Ассоциации волонтерских центров</p>
+    </div>
+    </div>
+{% endif %}
+
+
+        <li>
+
+            <input type="text" class="form_name" name="name"  placeholder="Имя" required />
+        </li>
+
+          <li>
+
+            <input type="text" class="form_fam" name="2ndname" placeholder="Фамилия" required />
+        </li>
+
+ <li>
+
+            <input type="text" class="form_otch"  name="3rdname" placeholder="Отчество, если есть"  />
+        </li>
+
+       <li>
+
+            <input type="text" class="form_phone" name="phone"  placeholder="Телефон" required />
+        </li>
+
+        <li>
+
+            <input type="text" class="form_email" name="mail"  placeholder="E-mail" required />
+        </li>
+
+
+        <li>
+
+            <textarea name="description" class="form_text" cols="40" rows="9"placeholder="Текст обращения" required ></textarea>
+        </li>
+
+          <li>
+
+            <textarea name="company" class="form_company"  cols="40" rows="9" placeholder="Название организации" required ></textarea>
+        </li>
+
+
+
+
+
+
+<li  class="write_upload"style="height: 70px;">
+    <label for="name" style="font-weight:500;" >Документы (doc, docx, txt, pdf), или изображения (jpg, png). Не более 10 Мб</label>
+        <div class="box">
+					<input type="file" name="files" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} Файлов выбрано" multiple enctype="multipart/form-data"/>
+					<label for="file-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="write_span">Прикрепить документ&hellip;</span></label>
+				</div>
+
+<li class="recaptcha">{% for field in form %} {{ field }} {% endfor %}</li>
+
+        <li>
+        	<button class="submit" type="submit">ОТПРАВИТЬ ЗАЯВКУ</button>
+        </li>
+
+         <li>
+
+        </li>
+
+
+    </ul>
+
+
+</form>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

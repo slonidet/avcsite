@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+
+
+<div class="container napr2" >
+    <div class="img_top">
+        <p><img src="{% static 'img/aboutassoc.jpg'%}" /></p>
+    </div>
+  <div class="container napr2">
+
+
+
+
+
+
+  <div id="vmap" class="hide_map" style="width: 1000px; height: 500px;display:block; "></div>
+<script type="text/javascript">
+<!--
+    function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none',
+		  vmap.style.display = 'block'
+		  ;
+       else
+          e.style.display = 'block',
+		  vmap.style.display = 'none'
+		  ;
+    }
+
+//-->
+</script>
+
+<a id="spbutton"   onclick="toggle_visibility('spisok'),$(this).hide(),$('#spbutton2').show();"><div id ="spb" class="spbutton1 center_button">Показать список областей</div></a>
+<a id="spbutton2"   onclick="toggle_visibility('spisok'),$(this).hide(),$('#spbutton').show();"><div id ="spb" class="spbutton1 center_button">Скрыть список областей</div></a>
+<div id="spisok" class="spisok_partner spisokright scrollbar" position="center">
+<ul>
+    {% for region in regions %}
+    <li><span><a onclick='$("#okruga").children().hide();$("#{{region.key}}").show();' class="{{region.key}}" >  {{region.title}} </a></span></li>
+    {% endfor %}
+ </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+</div>
+
+
+
+<div id="okruga" class="container napr2">
+    {% for region in regions %}
+    <div class="region" id="{{ region.key }}">
+    <p class="region_title">{{region.title}}</p>
+
+
+    	  {% spaceless %}
+    	  {% for center in centers %}
+            <div class="partners">
+    	    {% if center.region_id == region.key %}
+                {% if center.title != "Ваш центр может стать первым!" %}
+                        <div class="partner"  onclick="location.href='{% url 'center' center.id%}';">
+        			<div class="partner-top">
+        				<img src="{% static 'img/HA.png' %}" style="width:14px;height:22px;margin-right: 115px;-moz-transform: skew(25deg);-ms-transform: skew(25deg);-webkit-transform: skew(25deg);-o-transform: skew(25deg);transform: skew(25deg);" ></img>
+        			</div>
+        			{% if center.image %}
+        			    <a href="{% url 'center' center.id %}" width="200px">	<img src="{{ center.thumb.url }}"></a>
+        			{% else %}
+        			    <a href="{% url 'center' center.id %}" width="200px">	<img src="{% static 'img/no_logo.jpg' %}"></a>
+        			{% endif %}
+        			<div class="partnerfill">
+        			<p>{{ center.title}}</p>
+        			</div>
+        			<div class="partnerplace">
+        			<p>{{ center.city }}</p>
+        			</div>
+
+
+
+		        </div>
+		        {% else %}
+		            <script type="text/javascript" charset="utf-8">
+		            $(document).ready(function () {
+		                jQuery('#vmap').vectorMap('set', 'colors', { {{region.key}}: '#606E8C'});
+		            });
+		            </script>
+		           
+        		    <p>На данный момент, центров в данном регионе не найдено</p>
+        		{% endif %}
+
+    	    {% endif %}
+    	    </div>
+    	  {% endfor %}
+
+    	  {% endspaceless %}
+    </div></br>
+{% endfor %}
+
+
+</div>
+{% endblock %}

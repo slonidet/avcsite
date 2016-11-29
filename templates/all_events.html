@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content%}
+<!-- Page Content -->
+<div class="container newsbg ">
+
+
+    <div class="container napr2"  >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Мероприятия по всей России!</h2>
+				<p></p>
+		</div>
+		</div>
+		</div>
+		</div>
+            <!-- Blog Post Content Column -->
+			 <div class="container napr2"  >
+
+
+                <!-- Blog Post -->
+        {% for obj in events %}
+        <a href="{% url 'event' obj.id %}" style="text-decoration:none;color:#333" ><div class="events_mod">
+            <img src="{{ obj.img.url }}" alt="" />
+            <div class="events_mod_title">
+                <p>{{ obj.title}}</p>
+            </div>
+            <div class="events_mod_place">
+                <p>{{ obj.place}}</p>
+            </div>
+            <div class="events_mod_address">
+                <p>{{obj.date_event|date:'d.m.Y' }}</p>
+            </div>
+        </div></a>
+        {% empty %}
+    	    <h1>Событий по данному запросу нет</h1>
+        {% endfor %}
+        
+        {% if events.paginator.page_range|length > 1 %}
+            <div class="page">
+                <ul class="pagination">
+                    {% if events.has_previous %}
+                        <li><a href="{% url 'all_events' events.previous_page_number %}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% if events.number > 5 %}
+                        <li><a href="{% url 'all_events' 1 %}">1</a></li>
+                        <li><a>...</a></li>
+                    {% endif %}
+                    {% for page in events.paginator.page_range %}
+                    {% if page <= max_index and page >= min_index %}
+                        {% if page == events.number %}
+                            <li class="active"><a href="{% url 'all_events' page %}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'all_events' page %}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    {% if events.number < last_page %}
+                        <li><a>...</a></li>
+                        <li><a href="{% url 'all_events' events.paginator.num_pages %}">{{ events.paginator.num_pages }}</a></li>
+
+                    {% endif %}
+                    {% if events.has_next %}
+                        <li><a href="{% url 'all_events' events.next_page_number %}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+        
+
+
+</div>
+
+
+
+
+   </div>
+                 </div>
+{% endblock %}

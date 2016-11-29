@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+
+<div class="container newsbg ">
+
+
+    <div class="container ne " style="padding-left:35px;" >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Проекты Ассоциации</h2>
+				<p></p>
+		</div>
+		</div>
+		</div>
+		</div>
+
+
+<div class="container ne" style="min-height:400px;">
+ <div class="events" style="margin-left: 6px;">
+    {% for project in projects %}
+		<div class="event" style="height: 200px;" onclick="location.href='{% url 'project' project.id %}';">
+			<div class="event-top">
+				<img src="{% static 'img/HA.png' %}" style="width:14px;height:22px;margin-right: 125px;-moz-transform: skew(25deg);-ms-transform: skew(25deg);-webkit-transform: skew(25deg);-o-transform: skew(25deg);transform: skew(25deg);margin-top:-22px;" ></img>
+			</div>
+			<a href="{% url 'project' project.id %}">	<img src="{{ project.img.url }}"></a>
+			<div class="eventfill" style="margin-top: -60px;height: 60px;">
+			<p style="font-size:14px;">{{ project.description }}</p>
+			</div>
+			<div class="placefill" style="height: 55px;margin-top: -115px;">
+			<p>{{ project.title }}</p>
+			</div>
+
+
+		</div>
+    {% empty %}
+        <h2>Проектов по данному запросу не найдено</h2>
+    {% endfor %}
+
+
+	</div>
+	{% if events.paginator.page_range|length > 1 %}
+            <div class="page">
+                <ul class="pagination">
+                    {% if projects.has_previous %}
+                        <li><a href="{% url 'center_projects' center_pk=center page=projects.previous_page_number %}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for page in projects.paginator.page_range %}
+                        {% if page == projects.number %}
+                            <li class="active"><a href="{% url 'center_projects' center_pk=center page=page %}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'center_projects' center_pk=center page=page %}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if projects.has_next %}
+                        <li><a href="{% url 'center_projects' center_pk=center page=projects.next_page_number %}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

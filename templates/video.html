@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load youtube_filt %}
+{% block content%}
+ <!-- Page Content -->
+    <div class="container napr2 "  >
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-8 ">
+
+                <!-- Blog Post -->
+
+                <!-- Title -->
+                <h2>{{ video.title }}</h2>
+                
+                <hr style="margin-top:10px;margin-bot:0px;">
+                
+                                 <p>{{ video.date }}</p>
+                 <hr>
+
+                <!-- Preview Image -->
+
+			   <iframe width="560" height="315" src="{{ video.source |embed_filt }}" frameborder="0" allowfullscreen></iframe>
+			<div style="margin-top:0px;">
+			<h4>Поделиться</h4>
+
+
+                		<div class="share">
+            <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+                <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+                <div class="ya-share2" data-services="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus" data-description:vkontakte="{{video.desc}}" data-size="m" data-limit="3"></div>
+
+
+                </div>
+                <hr>
+            
+<p>{{ video.desc}}</p>
+
+
+
+</div>
+            </div>
+
+            <div class="col-lg-4 " style="margin-top:54px;">
+			<h4 style="background-color:#2e3192;margin-bottom:0px;padding-bottom:5px;padding-top:5px;padding-left:5px;color:white;">Ещё видео</h4>
+			{% for obj in other %}
+                <a href="{% url 'video' obj.id %}"><div id="div1" class="morenews">
+
+			<img src="{{ obj.source|youtube_filt }}" >
+			<div class="morenewsblock">
+			<p>{{ obj.title}}</p>
+			<hr class="hrnews">
+			</div>
+			<hr class="test">
+			</div></a>
+            {% endfor %}
+              
+            
+
+
+
+        <!-- /.row -->
+
+</div>
+   </div>
+		</div>
+{% endblock %}

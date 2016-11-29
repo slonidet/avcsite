@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container napr2">
+    <div class="fes_logo">
+        <img src="{% static 'img/logonobg.png' %}" alt="" />
+    </div>
+</div>    
+<div class="container events_projects">
+    <div class="napr2">
+        
+    </div>
+</div>
+<div class="container napr2 events_and_projects">
+    <div class="big_title">
+        <h4>СОБЫТИЯ</h4>
+    </div>
+    {% for obj in events %}
+    <div class="events_mod">
+        <img src="{{ obj.img.url }}" alt="" />
+        <div class="events_mod_title">
+            <p>{{ obj.title }}</p>
+        </div>
+        <div class="events_mod_place">
+            <p>{{ obj.place }}</p>
+        </div>
+        <div class="events_mod_address">
+            <p>{{ obj.date_event | date:"d.m.Y" }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <div class="titlebl" style="margin-top:20px;">
+        <img src="{% static 'img/dgl.png' %}" class="left"></img>
+        <div class="titlenews"> <div class="titlenews2 my-tool"data-container="body"  data-toggle="popover" data-placement="top" data-content="Ознакомиться со всеми событиями можно на сайте <a href='http://xn--90acesaqsbbbreoa5e3dp.xn--p1ai/'>«Добровольцы России»</a>" ><a href="http://xn--90acesaqsbbbreoa5e3dp.xn--p1ai/" >Все События </a></div></div>
+        <img src="{% static 'img/dgr.png' %}" class="right"></img>
+    </div>
+</div>
+
+<div class="container napr2 events_blue_bg">
+    <div class="big_title">
+        <h4>ПРОЕКТЫ</h4>
+    </div>
+    {% for obj in projects %}
+    <div class="events_mod">
+        <img src="{{ obj.img.url }}" alt="" />
+        <div class="events_mod_title">
+            <p>{{ obj.title }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <div class="titlebl" style="margin-top:20px;">
+        <img src="{% static 'img/dgl.png' %}" class="left"></img>
+        <div class="titlenews"> <div class="titlenews2 "><a href="{% url 'projects'  %}">Все Проекты</a></div></div>
+        <img src="{% static 'img/dgr.png' %}" class="right"></img>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+$( document ).ready(function() {
+$(".my-tool").popover({ trigger: "manual" , html: true, animation:false})
+    .on("mouseenter", function () {
+        var _this = this;
+        $(this).popover("show");
+        $(".popover").on("mouseleave", function () {
+            $(_this).popover('hide');
+        });
+    }).on("mouseleave", function () {
+        var _this = this;
+        setTimeout(function () {
+            if (!$(".popover:hover").length) {
+                $(_this).popover("hide");
+            }
+        }, 300);
+});
+});
+</script>
+{% endblock %}

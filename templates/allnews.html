@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content%}
+<!-- Page Content -->
+<div class="container newsbg newsbg_news">
+
+
+    <div class="container napr2" >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>{{ title }}</h2>
+				<p></p>
+		</div>
+		</div>
+		<form method="GET">
+		<div class="news_search">
+            <div class="form-group">
+              <div class="date-select">
+                <p>Выберите дату (начало)</p>
+                <input type='text' name="date_start" class="datepicker-here" />
+             </div>
+             <div class="date-select">
+                 <p>Выберите дату (конец)</p>
+                <input type='text' name="date_end" class="datepicker-here" />
+             </div>
+             <div class="region_select">
+                <select  name = "region" >
+                    <option disabled selected >Выберите округ</option>
+               {% for region in okruga %}
+                    <option value="{{ region.0 }}" >{{ region.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="Поиск" class="button_news_search"/>
+             </div>
+            </div>
+        </form>
+		</div>
+		</div>
+		
+		
+            <!-- Blog Post Content Column -->
+			 <div class="container napr2"  >
+
+        <div class="row ">
+
+                <!-- Blog Post -->
+        {% for obj in news %}
+        <a href="{% url 'news' obj.id %}" style="text-decoration:none;color:#333" ><div class="news_block">
+        <div class="news-left">
+            <div class="news-date">
+		<p>{{obj.date_published|date:'d.m.Y' }}
+			</p>
+			</div>
+			<img src="{{ obj.thumb.url }}" >
+        </div>
+		<div class="news-right">
+		<div class="news-title">
+		<p>{{ obj.title}}
+			</p>
+			</div>
+
+			
+			<div class="news-desc">
+			{% spaceless %}{{ obj.text|striptags|truncatechars:360|safe}}{% endspaceless %}
+
+
+			</div>
+        </div>
+        </div></a>
+        {% empty %}
+    	    <h1>Новостей по данному запросу нет</h1>
+        {% endfor %}
+
+        {% if news.paginator.page_range|length > 1 %}
+            <div class="page">
+                <ul class="pagination">
+                    {% if news.has_previous %}
+                        <li><a href="{% url 'all_news'%}?page={{news.previous_page_number}}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %} ">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% if news.number > 5 %}
+                        <li><a href="{% url 'all_news'%}?page=1&{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">1</a></li>
+                        <li><a>...</a></li>
+                    {% endif %}
+                    {% for page in news.paginator.page_range %}
+                    {% if page <= max_index and page >= min_index %}
+                        {% if page == news.number %}
+                            <li class="active"><a href="{% url 'all_news' %}?page={{page}}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'all_news'%}?page={{page}}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    {% if news.number < last_page %}
+                        <li><a>...</a></li>
+                        <li><a href="{% url 'all_news' %}?page={{news.paginator.num_pages}}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">{{ news.paginator.num_pages }}</a></li>
+
+                    {% endif %}
+                    {% if news.has_next %}
+                        <li><a href="{% url 'all_news' %}?page={{news.next_page_number}}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+
+
+
+
+
+
+
+            </div>
+
+   </div>
+                 </div>
+
+
+{% endblock %}

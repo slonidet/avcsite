@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content%}
+<!-- Page Content -->
+<div class="container newsbg ">
+
+
+    <div class="container napr2 " >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Мнения о добровольчестве</h2>
+				<p></p>
+		</div>
+		</div>
+		</div>
+		</div>
+            <!-- Blog Post Content Column -->
+			 <div class="container napr2">
+
+        <div class="row eve">
+            <div class="col-lg-12 ">
+
+                <!-- Blog Post -->
+        {% for obj in opinions %}
+        <a href="{% url 'opinion' obj.id %}" style="text-decoration:none;color:#333" ><div class="news_block">
+        <div class="news-left">
+            <div class="news-date">
+		<p>{{obj.date|date:'d.m.Y' }}
+			</p>
+			</div>
+			<img src="{{ obj.thumb.url }}" >
+        </div>
+		<div class="news-right">
+		<div class="news-title opi-story-title">
+		<p>{{ obj.name}} {{obj.fam}}
+			</p>
+			</div>
+
+			
+			<div class="news-desc">
+			    <p class="story-opi-desc">{{obj.desc}}</p>
+			    <hr class="main_hr">
+			{% spaceless %}{{ obj.text|striptags|truncatechars:360|safe}}{% endspaceless %}
+
+
+			</div>
+        </div>
+        </div></a>
+        {% endfor %}
+
+        {% if news.paginator.page_range|length > 1 %}
+            <div class="page">
+                <ul class="pagination">
+                    {% if news.has_previous %}
+                        <li><a href="{% url 'page' news.previous_page_number %}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for page in news.paginator.page_range %}
+                        {% if page == news.number %}
+                            <li class="active"><a href="{% url 'page' page %}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'page' page %}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if news.has_next %}
+                        <li><a href="{% url 'page' news.next_page_number %}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+
+
+
+
+
+
+
+            </div>
+
+
+   </div>
+                 </div>
+
+
+
+{% endblock %}

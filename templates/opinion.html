@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+<!-- Page Content -->
+    <div class="container napr2" >
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-8 ">
+
+                <!-- Blog Post -->
+
+                <!-- Title -->
+                <h2>{{opinion.name}} {{ opinion.fam }}</h2>
+                <h4>{{opinion.desc}}</h4>
+
+
+
+
+                <hr style="margin-top:10px;margin-bot:0px;">
+                 <p>{{opinion.date}}</p>
+                 <hr>
+
+                <!-- Preview Image -->
+
+			    <img class="img-responsive" src="{{ opinion.photo.url }}" alt="" style="margin-top:0px;width:100%;height:100%;margin-bottom:80px;">
+			<div style="margin-top:-70px;">
+			<h4>Поделиться</h4>
+
+
+                	<div class="share">
+            <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+                <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+                <div class="ya-share2" data-services="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus" data-description:vkontakte="{{opinion.text|safe|truncatechars:500}}" data-size="m" data-limit="3"></div>
+
+
+                </div>
+                <hr>
+                <p>{{ opinion.quote }}</p>
+                <hr>
+                
+                <!-- Post Content
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p> -->
+                    {{ opinion.text|safe }}
+
+                <hr>
+                
+
+
+
+
+</div>
+            </div>
+
+            <div class="col-lg-4 " style="margin-top:82px;">
+			<h4 style="background-color:#2e3192;margin-bottom:0px;padding-bottom:5px;padding-top:5px;padding-left:5px;color:white;">Ещё мнения</h4>
+			{% for obj in other %}
+                <a href="{% url 'opinion' obj.id %}"><div id="div1" class="morenews">
+
+			<img src="{{ obj.photo.url }}" >
+			<div class="morenewsblock">
+			<p>{{ obj.name}} {{obj.fam}}</p>
+			<p>{{ obj.desc }}</p>
+			<hr class="hrnews">
+			</div>
+			<hr class="test">
+			</div></a>
+            {% endfor %}
+
+
+
+        <!-- /.row -->
+
+</div>
+   </div>
+		</div>
+
+{% endblock %}

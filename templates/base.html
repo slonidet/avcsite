@@ -1,0 +1,397 @@
+{% load staticfiles %}
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html>
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{{ title|default:"Ассоциация волонтерских центров" }}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom Google Web Font -->
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+    <!-- Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/centers.css' %}" />
+   <link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/component.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/news.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/event.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/opinion.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/history.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/slider.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.bxslider.css' %}">
+    <link rel="stylesheet" href="{% static 'css/youtubegallerywall.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/photo.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+
+
+
+
+<style>
+    /* IE8 and below specific CSS */
+
+    ul.youtubewall li .thumbwrap:after{
+        display: none; /* hide thumbnail overlay and show thumbnail icons by default */
+    }
+
+    </style>
+
+<!--[endif]-->
+
+
+<script src="{% static 'js/youtubegallerywall.js' %}">
+
+/***********************************************
+* YouTube Gallery Wall - (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Please keep this notice intact
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and 100s more
+***********************************************/
+
+</script>
+
+<script>
+
+jQuery(function(){ // on DOM load
+    //syntax $(selector).youtubegallery()
+    $('#youtubelist').youtubegallery()
+})
+
+</script>
+
+
+
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    
+
+<script src="{% static 'js/device.min.js' %}" type="text/javascript"></script>
+
+    <link href="{% static 'jqvmap/css/jqvmap.css' %}" media="screen" rel="stylesheet" type="text/css" />
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
+
+    {% url 'home' as home_url %}
+    {% url 'centers' as centers_url %}
+    {% if request.get_full_path == home_url or centers_url in request.get_full_path %}
+        {% comment %}  вывод css js карты только на главной {% endcomment %}
+        <script src="{% static 'jqvmap/js/jquery.vmap.js' %}" type="text/javascript"></script>
+        <script src="{% static 'jqvmap/js/main.js' %}" type="text/javascript"></script>
+        <script src="{% static 'jqvmap/js/maps/jquery.vmap.russia.js' %}" type="text/javascript"></script>
+        <link href="{% static 'jqvmap/css/map.css' %}" media="screen" rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript">
+        // Массив всех объектов
+        var data_obj = {
+
+        };
+
+        colorRegion = '#2e324d'; // Цвет всех регионов
+        focusRegion = '#ffffff'; // Цвет подсветки регионов при наведении на объекты из списка
+        selectRegion = 'white'; // Цвет изначально подсвеченных регионов
+
+        highlighted_states = {};
+
+        // Массив подсвечиваемых регионов, указанных в массиве data_obj
+        for(iso in data_obj){
+            highlighted_states[iso] = selectRegion;
+        }
+
+        $(document).ready(function() {
+            $('#vmap').vectorMap({
+
+                map: 'russia',
+                backgroundColor: '',
+                borderColor: '#ffffff',
+                borderWidth: 2,
+                color: colorRegion,
+                colors: highlighted_states,
+                hoverOpacity: 0.3,
+                enableZoom: false,
+                showTooltip: true,
+
+
+                // Отображаем объекты если они есть
+                onLabelShow: function(event, label, code){
+
+                    name = '<strong>'+label.text()+'</strong><br>';
+                    if(data_obj[code]){
+                        list_obj = '<ul>';
+                        for(ob in data_obj[code]){
+                            list_obj += '<li>'+data_obj[code][ob]+'</li>';
+                        }
+                        list_obj += '</ul>';
+                    }else{
+                        list_obj = '';
+                    }
+                    label.html(name + list_obj);
+                    list_obj = '';
+                },
+                // Клик по региону
+                onRegionClick: function(element, code, region){
+                //Действие по клику
+
+                $("#okruga").children().hide()
+                $("#" + code).show()
+                
+                if (code === "mc"){
+                    $("#mc2").show();
+                }
+                if (code === "le"){
+                    $("#le2").show();
+                }
+
+                }
+                
+            });
+
+        });
+        // Выводим начальный список при загрузке
+        $(document).ready(function() {
+        $('#spbutton2').hide()
+        $("#okruga").children().hide();
+        $("#mc").show();
+        $("#mc2").show();
+        $("#direc").hide();
+        });
+
+
+
+        </script>
+    {% endif %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/adaptive.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'magnific_popup/magnific-popup.css' %}" />
+<script src="{% static 'magnific_popup/jquery.magnific-popup.min.js' %}"></script>
+
+<script src="{% static 'date_picker/datepicker.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'date_picker/datepickermin.css' %}" />
+
+<link rel="stylesheet" type="text/css" href="{% static 'arcticmodal/jquery.arcticmodal.css' %}" />
+<script src="{% static 'arcticmodal/jquery.arcticmodal.js' %}" type="text/javascript"></script>
+<script src="//yandex.st/jquery/cookie/1.0/jquery.cookie.min.js"></script>
+
+<!--tooltip-->
+
+
+
+<meta name="mailru-domain" content="6TsQ1n5mBvS1INJy" /> <!--необходимо для корп.почты mail.ru-->
+
+<meta name="yandex-verification" content="3e6926c5c26f18e8" />
+<!--яндекс веб мастер-->
+
+
+</head>
+
+<body id="home">
+<!-- Preloader -->
+    <div id="preloader">
+        <div id="status"></div>
+    </div>
+
+    <!-- FullScreen -->
+    <div class="intro-header">
+
+        <!-- /.container -->
+        <div class="col-xs-12 text-center abcen wow fadeIn">
+            <div class="button_down ">
+
+            </div>
+        </div>
+    </div>
+    <!-- Хедер-->
+    <div class="container header ">
+    <div class="container napr2 logo-position" style="padding-left:0px;padding-right:0px">
+    <a href="{% url 'home' %}"><img  src="{% static 'img/logonobg.png' %}" alt="logo" class="logo"  />
+    <a href="{% url 'join' %}" class="button8 menu-item2"><div class="inner2 fon">Войти в состав</div></a>
+    <div class="search" >
+        
+        <form method="get" action="http://avcrf.ru/search/">
+        <input type="hidden" name="searchid" value="2285610"/>
+        <!--<input type="submit" />-->
+        <input type="text" name="text" placeholder="Поиск по сайту" > <button class="search_butt" type="submit" ><i class="fa fa-search" aria-hidden="true"></i></button>
+        </form>
+    </div>
+    </div>
+      
+    </div>
+    <!-- Хедер-->
+    <!-- NavBar-->
+    <nav class="navbar-default grey " role="navigation">
+        <div class="container-fluid  mybrand napr2">
+        
+        <div class="my_menu">
+            <div class="navbar-header ">
+        
+                <a href="{% url 'home' %}"><img  src="{% static 'img/icon/Home.png' %}" alt="logo"   /></a>
+                <button type="button" class="navbar-toggle  margin0px" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+
+
+            <div class="collapse navbar-collapse navbar-left navbar-ex1-collapse"  >
+
+                <ul class="nav navbar-nav" >
+
+                    <li class="dropdown menu-item"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><div class="inner">Ассоциация<hr class="line" ></div> </a>
+             <ul class="dropdown-menu mu-item assoc-margin">
+            <li><a href="{% url 'about' %}">Об Ассоциации</a></li>
+            <li><a href="{% url 'structure' %}">Структура</a></li>
+            
+            <li><a href="{% url 'partners' %}">Партнеры</a></li>
+            <li><a href="{% url 'documents' %}">Документы</a></li>
+            <li><a href="{% url 'write' %}">Обратная связь</a></li>
+                     </ul>
+        </li>
+        
+        <li class="dropdown menu-item"><a href="{% url 'all_news' %}" class="dropdown-toggle" ><div class="inner">Новости<hr class="line" ></div> </a>
+                     <ul class="dropdown-menu mu-item press-margin" >
+                        <li><a href="{% url 'all_news' %}">Новости </a></li>
+                        <li><a href="{% url 'press_releases' %}">Пресс-релизы </a></li>
+
+                                </ul>
+        </li>
+
+
+
+        <li class="dropdown menu-item"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><div class="inner">Деятельность<hr class="line" ></div> </a>
+                     <ul class="dropdown-menu mu-item deyat-margin">
+                            <li><a href="{% url 'fes' %}">Экспертный совет</a></li>
+                            <li><a href="{% url 'academy' %}">Академия волонтерских центров</a></li>
+                            <li><a href="{% url 'activities' %}">Направления </a></li>
+                            <li><a href="{% url 'events_projects' %}">События и проекты </a></li>
+
+                     </ul>
+        </li>
+
+
+        <li class="dropdown menu-item"><a href="{% url 'centers' %}" class="dropdown-toggle" ><div class="inner">Волонтерские центры<hr class="line" ></div> </a>
+
+        </li>
+
+        
+        <li class="dropdown menu-item"><a href="{% url 'media' %}" class="dropdown-toggle" ><div class="inner">Медиа<hr class="line" ></div> </a></li>
+        <li class="dropdown menu-item"><a href="{% url 'contacts' %}" class="dropdown-toggle" ><div class="inner">Контакты<hr class="line" ></div> </a></li>
+                </ul>
+
+
+            </div>
+    </div>
+
+
+            <ul class="nav navbar-nav navbar-right socialt">
+                <li class="menu-item" id="soc-facebook"><a href="https://www.facebook.com/AVCRussia/" target="_blank"><div class="inner"><i class="fa fa-lg fa-facebook"></i></div></a></li>
+                <li class="menu-item" id="soc-twitter"><a href="https://twitter.com/AVCRF" target="_blank"><div class="inner"><i class="fa fa-lg fa-twitter"></i></div></a></li>
+                <li class="menu-item" id="soc-instagram"><a href="https://www.instagram.com/avcrf/" target="_blank"><div class="inner"><i class="fa fa-lg fa-instagram"></i></div></a></li>
+                <li class="menu-item" id="soc-vk"><a href="https://vk.com/avcrf " target="_blank"><div class="inner"><i class="fa fa-lg fa-vk"></i></div></a></li>
+            </ul>
+
+        
+</div>
+        </div>
+    </nav>
+
+        {% block content%} {% endblock %}
+<div class="container footer" >
+ <div class="container napr2 footer-center">
+ <img  src="{% static 'img/pl.png' %}"  class="footimg"  />
+ <div class="sub_form" >
+     <form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=avcrf/HMiK', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+         <p>Подпишитесь на наши новости с помощью email:</p><p><input type="text" class="sub_email" name="email"/></p><input type="hidden" value="avcrf/HMiK" name="uri"/><input type="hidden" name="loc" value="ru_RU"/>
+         <input type="submit" value="Подписаться" /><p class="sub_desc"> Или на нашу rss-ленту: avcrf.ru/news/sitenews</p></form>
+ </div>
+ <img  src="{% static 'img/pp.png' %}"  class="footimg2"  />
+ <div class="foottext">
+ <p>8 (499) 755-77-34</p>
+
+ <p>info@avcrf.ru</p>
+ </div>
+
+</div>
+</div>
+     <!-- футер-->
+
+
+
+    <!-- JavaScript -->
+
+
+<script>
+    $(document).ready(function() {
+var stickyNavTop = $('.grey').offset().top;
+
+var stickyNav = function(){
+var scrollTop = $(window).scrollTop();
+
+if (scrollTop > stickyNavTop) {
+    $('.grey').addClass('sticky');
+} else {
+    $('.grey').removeClass('sticky');
+}
+};
+
+stickyNav();
+
+$(window).scroll(function() {
+    stickyNav();
+});
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/classie.js' %}"></script>
+    <script src="{% static 'js/slider.js' %}"></script>
+    <script src="{% static 'js/jquery.bxslider.js' %}"></script>
+    <script src="{% static 'js/youtubegallerywall.js' %}"></script>
+    <script src="{% static 'js/modernizr.custom.js' %}"></script>
+     <script src="{% static 'js/grid.js' %}"></script>
+     <script src="{% static 'js/custom-file-input.js' %}"></script>
+
+
+        <script>
+    $("#slider-container").sliderUi({
+        speed: 200,
+        cssEasing: "cubic-bezier(0.285, 1.015, 0.165, 1.000)"
+    });
+    $("#caption-slide").sliderUi({
+        caption: true,controlShow: false,
+
+
+
+    });
+</script>
+
+
+
+</body>
+
+</html>

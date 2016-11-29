@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load ext_filt %}
+{% block content%}
+
+<div class="container newsbg ">
+
+
+    <div class="container napr2 "  >
+
+        <div class="row">
+
+
+		 <!-- Title -->
+
+			<div class="newsmaintop">
+                <h2>Документы Ассоциации</h2>
+				<p>Здесь вы можете скачать все сопутствующие документы</p>
+		</div>
+		</div>
+		</div>
+		</div>
+
+	<div class="container napr2 "  >
+	 {% for obj in documents %}
+     <!--<div class="docs">
+        <img src="{% static 'img/doc.png' %}">
+     <div class="docstext">
+       <p style="height:45px;">{{ obj.title }}</p>
+       <a href="{{ obj.document.url }}" download>{{ obj.document.size|filesizeformat }} / {{ obj.document.url| ext_filt }} / Скачать </a>
+
+     </div>
+        
+     </div>-->
+        <p ><a class="doclink" href="{{ obj.document.url }}" download >{{ obj.title }}</a></p>
+    {% endfor %}
+
+	 </div>
+
+{% endblock %}

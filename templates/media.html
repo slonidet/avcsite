@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load youtube_filt %}
+{% block content%}
+
+<div class="container napr2" style="">
+    
+
+<div class="sc_button">
+    
+	    	<div class="skew skew-blue" id="video_media"><h2>ВИДЕО</h2></div>
+		  	<div class="skew2 skew-gray" id="photo_media"><h2>ФОТО</h2></div>
+</div>
+
+</div>
+<script>
+$(document).ready(function() {
+
+    	$("#direc").hide();
+    	});
+</script>
+
+
+
+
+
+<div class="container napr2" >
+
+<div class="mnews" id="struc">
+	   {% for obj in video %}
+		<div class="mnew" onclick="location.href='{% url 'video' obj.id %}';" >
+		
+			<a style="color:white;text-decoration: none;" href="{% url 'video' obj.id %}"><img src="{{ obj.source|youtube_filt }}"></a>
+			<div class="mnewsfill" id="mnewsfill">
+			<a style="color:white;text-decoration: none;" href="{% url 'video' obj.id %}"><p class="mtitle">{{ obj.title }}</p></a>
+			</div>
+				<div class="datefill" style="margin-top:-160px;">
+			<p>{{ obj.date| date:"d.m.Y" }}</p>
+			</div>
+			    		<div class="watch" id="watch">
+			<p>Смотреть</p>
+			</div>
+		</div>
+		{% endfor %}
+		
+</div>
+
+
+ <div class="mnews" id="direc">
+	{% for obj in album %}
+		<div class="mnew" onclick="location.href='{% url 'photo' obj.id %}';">
+		
+			<a style="color:white;text-decoration: none;" href="{% url 'photo' obj.id %}"><img src="{{ obj.thumb.url }}"></a>
+			<div class="mnewsfill" id="mnewsfill">
+			<a style="color:white;text-decoration: none;" href="{% url 'photo' obj.id %}"><p class="mtitle">{{ obj.title}}</p></a>
+			</div>
+				<div class="datefill" style="margin-top:-160px;">
+			<p>{{ obj.date_album| date:"d.m.Y"}}</p>
+			</div>
+			    		<div class="watch2" id="watch">
+				<p>Подробнее</p>
+			</div>
+		</div>
+    {% endfor %}
+		
+</div>
+
+</div>
+
+
+	<script>
+			$(function() {
+				Grid.init();
+			});
+		</script>
+
+
+<script>
+    $(function() {
+    $("#video_media").click(function() {
+        if( $("#video_media").hasClass("skew-gray")) {
+            $("#video_media").removeClass("skew-gray");
+            $("#video_media").addClass("skew-blue");
+            $("#photo_media").removeClass("skew-blue")
+            $("#photo_media").addClass("skew-gray");
+            $("#struc").hide();
+		    $("#direc").show();
+		    
+        };
+         $("#direc").hide();
+		   $("#struc").show();
+        
+    });
+    $("#photo_media").click(function() {
+        if( $("#photo_media").hasClass("skew-gray")) {
+            $("#photo_media").removeClass("skew-gray");
+            $("#photo_media").addClass("skew-blue");
+            $("#video_media").removeClass("skew-blue")
+            $("#video_media").addClass("skew-gray");
+            $("#direc").hide();
+		    $("#struc").show();
+        };
+        
+		 $("#struc").hide();
+		    $("#direc").show();
+    });
+});
+</script>
+
+{% endblock %}
